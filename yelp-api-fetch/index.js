@@ -9,7 +9,7 @@ if (!process.env.YELP_API_KEY) {
 }
 
 (async () => {
-    const { location } = await inquirer.prompt([
+    const { location, limit } = await inquirer.prompt([
         {
             type: 'input',
             name: 'location',
@@ -22,14 +22,12 @@ if (!process.env.YELP_API_KEY) {
                 }
             }
         },
-    ]);
-    const { limit } = await inquirer.prompt([
         {
             type: 'input',
             name: 'limit',
             message: 'What size is the limit ?',
             default: 50,
-        },
+        }
     ]);
 
     const yelp = axios.create({
