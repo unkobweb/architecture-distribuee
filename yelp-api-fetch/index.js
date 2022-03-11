@@ -4,23 +4,31 @@ import inquirer from 'inquirer';
 dotenv.config();
 
 if (!process.env.YELP_API_KEY) {
-  console.log('YELP_API_KEY is undefined');
-  process.exit(1);
+    console.log('YELP_API_KEY is undefined');
+    process.exit(1);
 }
 
 (async () => {
-    const {location} = await inquirer.prompt([
+    const { location } = await inquirer.prompt([
         {
             type: 'input',
             name: 'location',
             message: 'What is the location you want to research?',
-            validate: function(value) {
+            validate: function (value) {
                 if (value.length) {
                     return true;
                 } else {
                     return 'Please enter a location';
                 }
             }
+        },
+    ]);
+    const { limit } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'limit',
+            message: 'What size is the limit ?',
+            default: 50,
         },
     ]);
 
@@ -30,13 +38,13 @@ if (!process.env.YELP_API_KEY) {
             Authorization: `Bearer ${process.env.YELP_API_KEY}`,
         },
     });
-    
+
     const res = await yelp.get('/search', {
         params: {
             location: location,
-            limit: 50,
+            limit: limit,
         },
     });
-    
+
     console.log(res.data.businesses);
 })();
