@@ -1,12 +1,12 @@
-function generatePID() {
+export function generatePID() {
   return Math.floor(Math.random() * 10000);
 }
 
-function wait(seconds) {
+export function wait(seconds) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 }
 
-function logError(logger, message) {
+export function logError(logger, message) {
   return new Promise(resolve => {
     logger.error(message, {timestamp: new Date().toISOString()});
     setInterval(() => {
@@ -14,5 +14,3 @@ function logError(logger, message) {
     }, 1000);
   })
 }
-
-module.exports = {generatePID, wait, logError};
