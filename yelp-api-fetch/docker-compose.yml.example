@@ -1,0 +1,21 @@
+services:
+  nantes:
+    build: .
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - PID=100
+      - YELP_API_KEY=
+      - LOCATION=nantes
+    ports:
+      - "3000:80"
+  paris:
+    build: .
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - PID=101
+      - YELP_API_KEY=
+      - LOCATION=paris
+    ports:
+      - "3001:80"
