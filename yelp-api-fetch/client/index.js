@@ -13,9 +13,6 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;
 });
 
-process.env.YELP_API_KEY = 'zDT978N3XYa88JnNYdI33IzROBCJAxOdMjB2_obzH8IrYGRe_Z6iF05rWZJRH4aG4HXoomSq_1KaqW6JcqbSTN9AbeDsLpPC7pZqZoEmxxaVvG7w1EUym7OqSPwqYnYx';
-process.env.LOCATION = 'nantes';
-
 const PID = process.env.PID || generatePID();
 
 // Create a logger who will log in file (json format) and console
@@ -59,8 +56,11 @@ for (let i = 0; i < envVarsNeeded.length; i++) {
 logger.info(`${envVarsNeeded.join(', ')} environment variables are set`);
 
 let offset = 0;
+const LIMIT = 5;
 
-const server = net.createServer(async function(c) { //'connection' listener
+const client = new net.Socket();
+
+client.connect({ port: 9999, host: process.env.NODE_ENV === 'production' ? 'server' : '127.0.0.1' }, async function() {
   while(true) {
     try {
       const yelp = axios.create({
@@ -70,21 +70,21 @@ const server = net.createServer(async function(c) { //'connection' listener
         },
       });
   
-      logger.info(`Fetch /search?location=${process.env.LOCATION}&limit=50&offset=${offset}`);
+      logger.info(`Fetch /search?location=${process.env.LOCATION}&limit=${LIMIT}&offset=${offset}`);
   
       const res = await yelp.get('/search', {
         params: {
           location: process.env.LOCATION,
-          limit: 50,
+          limit: LIMIT,
+          offset: offset
         },
       });
   
       logger.info(`${res.data.businesses.length} businesses found`);
 
-      c.write(JSON.stringify(res.data) + '\r\n');
-      c.pipe(c);
+      client.write(JSON.stringify(res.data) + '\r\n');
       
-      if (res.data.businesses.length < 50) {
+      if (res.data.businesses.length < LIMIT) {
         logger.info('No more businesses to fetch');
         offset = 0;
       } else {
@@ -93,10 +93,8 @@ const server = net.createServer(async function(c) { //'connection' listener
   
       await wait(2);
     } catch (error) {
+      console.log(error);
       await logError(logger, error);
     }
   }
-});
-server.listen(9999, function() { //'listening' listener
-  console.log('server bound');
 });
