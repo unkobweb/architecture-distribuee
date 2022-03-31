@@ -43,3 +43,5 @@ Un exemple est fournit pour la ville Nantes, mais il est possible d'en ajouter a
 Les agents logs en permanence leur activité, vous pouvez monter un volume sur votre machine hôte pour récupérer les fichiers de logs. Un health check est également appelable sur `GET http://localhost:[PID]` pour vérifier que l'agent vous répond.
 
 Une fois que vous avez modifié votre `docker-compose.yml` vous pouvez relancer la commande `docker-compose up -d` pour démarrer les agents.
+
+Pour que les infos récupérées par les agents soit traitées et envoyées à la base de donnée, il faut lancer la commande `spark-shell -I .\streamingToMongo.scala --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 --conf spark.sql.catalogImplementation=in-memory` depuis le répertoire yelp-api-fetch/spark.
