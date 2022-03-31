@@ -2,3 +2,4 @@ node_modules
 logs
 .env
 docker-compose.yml
+data

@@ -88,7 +88,7 @@ client.connect({ port: 9999, host: process.env.NODE_ENV === 'production' ? 'serv
         logger.info('No more businesses to fetch');
         offset = 0;
       } else {
-        offset += 50;
+        offset += LIMIT;
       }
   
       await wait(2);

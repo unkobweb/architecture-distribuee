@@ -11,9 +11,9 @@ import org.apache.spark.sql.{ SaveMode }
 val ssc = new StreamingContext(sc, Seconds(1))
 
 // Create a DStream that will connect to hostname:port, like localhost:9999
-//Modifier host
-val lines = ssc.socketTextStream("localhost", 9999)
 
+val lines = ssc.socketTextStream(if (System.getenv("SCALA_ENV") == "production") "server" else "server", 9999)
+println(System.getenv("SCALA_ENV"))
 lines.foreachRDD({ rdd =>
     import spark.implicits._
     val yelpBusiness = spark.read.json(rdd)
