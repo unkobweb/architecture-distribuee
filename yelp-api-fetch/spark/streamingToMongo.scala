@@ -12,13 +12,13 @@ val ssc = new StreamingContext(sc, Seconds(1))
 
 // Create a DStream that will connect to hostname:port, like localhost:9999
 
-val lines = ssc.socketTextStream(if (System.getenv("SCALA_ENV") == "production") "server" else "server", 9999)
+val lines = ssc.socketTextStream(if (System.getenv("SCALA_ENV") == "production") "server" else "localhost", 9999)
 println(System.getenv("SCALA_ENV"))
 lines.foreachRDD({ rdd =>
     import spark.implicits._
     val yelpBusiness = spark.read.json(rdd)
     yelpBusiness.createOrReplaceTempView("yelpBusiness")
-    yelpBusiness.printSchema
+    // yelpBusiness.printSchema()
     val business = spark.sql("SELECT id AS business_id, name, location.address1 AS address, location.city,  coordinates.latitude, coordinates.longitude, rating, review_count, concat_ws(',', categories.title) AS categories, image_url FROM yelpBusiness WHERE is_closed = false")
     MongoSpark.save(business.write.option("collection", "spark").mode(SaveMode.Append))
     })
