@@ -8,9 +8,9 @@ val spark = SparkSession.builder().appName("MongoSparkDataFrame").master("local"
 
 // Step 1 create the Dataframe source
 //Modifier les chemins pour récupérer les datasets
-val yelpBusiness = spark.read.json("dataset/yelp_academic_dataset_business.json")
-val yelpUsers = spark.read.json("dataset/yelp_academic_dataset_user.json")
-val yelpReview = spark.read.json("dataset/yelp_academic_dataset_review.json")
+val yelpBusiness = spark.read.json("../../dataset/yelp_academic_dataset_business.json")
+val yelpUsers = spark.read.json("../../dataset/yelp_academic_dataset_user.json")
+val yelpReview = spark.read.json("../../dataset/yelp_academic_dataset_review.json")
 
 yelpBusiness.printSchema()
 yelpUsers.printSchema()
@@ -20,7 +20,7 @@ yelpBusiness.createOrReplaceTempView("yelpBusiness")
 yelpUsers.createOrReplaceTempView("yelpUsers")
 yelpReview.createOrReplaceTempView("yelpReview")
 
-val business = spark.sql("SELECT business_id, name, address, city, latitude, longitude, stars as rating, review_count categories, hours, attributes.BusinessAcceptsCreditCards, attributes.RestaurantsReservations, attributes.WheelchairAccessible, attributes.OutdoorSeating, attributes.HappyHour, attributes.DogsAllowed FROM yelpBusiness WHERE is_open = 1")
+val business = spark.sql("SELECT yelpBusiness.business_id, first(yelpBusiness.name) as name, first(yelpBusiness.address) as address, first(yelpBusiness.city) as city, first(yelpBusiness.latitude) as latitude, first(yelpBusiness.longitude) as longitude, first(yelpBusiness.stars) as rating, first(categories) as categories, first(hours) as hours, first(attributes).BusinessAcceptsCreditCards as BusinessAcceptsCreditCards, first(attributes).RestaurantsReservations as RestaurantsReservations, first(attributes).WheelchairAccessible as WheelchairAccessible, first(attributes).OutdoorSeating as OutdoorSeating, first(attributes).HappyHour as HappyHour, first(attributes).DogsAllowed as DogsAllowed, COUNT(yelpReview.review_id) AS review_count FROM yelpBusiness LEFT JOIN yelpReview ON yelpReview.business_id = yelpBusiness.business_id WHERE yelpBusiness.is_open = 1 GROUP BY yelpBusiness.business_id")
 val user = spark.sql("SELECT user_id, name, yelping_since FROM yelpUsers")
 val review  = spark.sql("SELECT review_id, user_id, business_id, stars, text, date FROM yelpReview")
 

@@ -45,7 +45,6 @@ class BusinessController extends Controller
                 ->get();
         }
 
-
         return view('business.search', compact('business', 'location'))->with('business', $business);
     }
 

@@ -1,2 +1,9 @@
+node_modules
+logs
+.env
+docker-compose.yml
+data
+mongo
+mysql
 dataset/*
 !dataset/README.md

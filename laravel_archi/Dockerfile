@@ -2,16 +2,16 @@ FROM php:8.1.4-cli-bullseye
 
 USER root
 
-ADD . /app
-
-WORKDIR /app
-
 RUN apt update -y && apt upgrade -y
 RUN apt install wget unzip -y
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN pecl install mongodb
 RUN echo "extension=mongodb.so" >> "$PHP_INI_DIR/php.ini"
-RUN cd /app
+
+ADD . /app
+
+WORKDIR /app
+
 RUN wget -O composer-setup.php https://getcomposer.org/installer
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN composer install
