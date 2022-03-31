@@ -36,8 +36,10 @@ Rendez vous dans le dossier yelp-api-fetch/spark et lancez la commande `spark-sh
 
 ### Streaming
 
-Il est possible de déployer des "agents" qui auront pour mission de remplir la base de donnée en s'appuyant sur l'API de Yelp.
-Un exemple de configuration est fournit dans le fichier `docker-compose.yml`. Il vous suffit de décommenter le code et d'y ajouter votre clé API Yelp.
+Il est possible de déployer des "agents" qui auront pour mission de remplir la base de donnée en s'appuyant sur l'API de Yelp. Un exemple de configuration est fournit dans le fichier `docker-compose.yml`. Il vous suffit de décommenter le code et d'y ajouter votre clé API Yelp.
+
 Un exemple est fournit pour la ville Nantes, mais il est possible d'en ajouter autant qque vous le désirez, vous devrez juste lui attribuer un autre PID et changer les ports d'écoutes pour qu'il correspondent au PID.
 
 Les agents logs en permanence leur activité, vous pouvez monter un volume sur votre machine hôte pour récupérer les fichiers de logs. Un health check est également appelable sur `GET http://localhost:[PID]` pour vérifier que l'agent vous répond.
+
+Une fois que vous avez modifié votre `docker-compose.yml` vous pouvez relancer la commande `docker-compose up -d` pour démarrer les agents.
