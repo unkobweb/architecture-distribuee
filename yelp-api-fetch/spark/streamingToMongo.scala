@@ -20,7 +20,7 @@ lines.foreachRDD({ rdd =>
     yelpBusiness.createOrReplaceTempView("yelpBusiness")
     // yelpBusiness.printSchema()
     val business = spark.sql("SELECT id AS business_id, name, location.address1 AS address, location.city,  coordinates.latitude, coordinates.longitude, rating, review_count, concat_ws(',', categories.title) AS categories, image_url FROM yelpBusiness WHERE is_closed = false")
-    MongoSpark.save(business.write.option("collection", "spark").mode(SaveMode.Append))
+    MongoSpark.save(business.write.option("collection", "business").mode(SaveMode.Append))
     })
 
 ssc.start()             // Start the computation

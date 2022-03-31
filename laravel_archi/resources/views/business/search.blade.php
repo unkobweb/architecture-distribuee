@@ -32,7 +32,7 @@
                     </div>
                     <div class="switch-container">
                         <label class="switch">
-                            <input type="checkbox" checked>
+                            <input name="insolite" type="checkbox" {{ app('request')->input('insolite') ? 'checked' : '' }}>
                             <span class="slider round"></span>
                         </label>
                         <p>Lieux insolites</p>

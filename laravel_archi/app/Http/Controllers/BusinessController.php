@@ -40,6 +40,7 @@ class BusinessController extends Controller
                 ->get();
         } else {
             $business = Business::where('city', 'like', "%$location%")
+                ->where('review_count', '>',  50)
                 ->limit(12)
                 ->get();
         }
