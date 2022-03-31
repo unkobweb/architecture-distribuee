@@ -15,7 +15,7 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        return view('index');
+        return view('home');
     }
 
     /**
@@ -48,49 +48,14 @@ class BusinessController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Business  $business
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $business = Business::where('business_id', $id)->first();
-        return view('business.show', compact('business'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Business  $business
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Business $business)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Business  $business
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Business $business)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Business  $business
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Business $business)
-    {
-        //
+        
+        $review = Review::where('business_id', $id)->get();
+        
+        dd($business);
+        $business = Business::where('business_id', $id)->first();
+        return view('business.show', compact('business', 'review'));
     }
 }

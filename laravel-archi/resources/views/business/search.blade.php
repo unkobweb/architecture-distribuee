@@ -19,7 +19,7 @@
     <h1>Résultats pour : {{$location}}</h1>
     <div class="results">
         @foreach($business as $place)
-            <a href="{{ route('business.show', $place->business_id) }}">
+        <a href="/show/{{$place->business_id}}">
             <div class="business">
                 @if(isset($place->image_url))
                 <img class="business_img" src="{{$place->image_url}}" alt="">
