@@ -5,6 +5,8 @@ import path from 'path';
 import express from 'express';
 import { generatePID, wait, logError } from './utils.js';
 import net from 'net';
+import dotenv from 'dotenv'
+dotenv.config()
 const { combine, timestamp, label, printf } = winston.format;
 
 const app = express();
@@ -82,7 +84,9 @@ client.connect({ port: 9999, host: process.env.NODE_ENV === 'production' ? 'serv
   
       logger.info(`${res.data.businesses.length} businesses found`);
 
-      client.write(JSON.stringify(res.data) + '\r\n');
+      for (const business of res.data.businesses) {
+        client.write(JSON.stringify(business) + '\r\n');
+      }
       
       if (res.data.businesses.length < LIMIT) {
         logger.info('No more businesses to fetch');
