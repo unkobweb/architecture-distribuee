@@ -23,17 +23,28 @@ class BusinessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $location = $request->geo;
-        
-        
-        $business = Business::where('city', 'like',"%$location%")
-        ->orWhere('address', 'like', "%$location%")
-        ->limit(12)
-        ->get();
+        if (isset($request->insolite)) {
+            $insolite = true;
+        } else {
+            $insolite = false;
+        }
+
+        if ($insolite == true) {
+            $business = Business::where('city', 'like', "%$location%")
+                ->where('review_count', '<',  50)
+                ->where('rating', '>=',  3.5)
+                ->limit(30)
+                ->get();
+        } else {
+            $business = Business::where('city', 'like', "%$location%")
+                ->limit(12)
+                ->get();
+        }
 
 
-        
         return view('business.search', compact('business', 'location'))->with('business', $business);
     }
 

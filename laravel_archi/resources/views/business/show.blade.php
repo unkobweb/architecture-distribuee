@@ -10,16 +10,10 @@
 </head>
 
 <body>
-    <nav class="nav">
-        <p>Logo</p>
-        <p>Nom</p>
-        <p>truc1</p>
-        <p>truc2</p>
-    </nav>
-    <h1>{{$business->name}}</h1>
-    <div class="pres">
+    <div class="search">
+        <h1>{{$business->name}}</h1>
         <p class="address">Adresse : {{$business->address}} - {{$business->city}}</p>
-        <p class="rating">Note moyenne : {{$business->rating}} / 5</p>
+        <p class="rating">Note moyenne : {{$business->rating}} / 5 sur {{$business->review_count}} notes</p>
         <p class="Categories">Categories : {{$business->categories}}</p>
         <div class="infos">
             <h3>Informations complémentaires : </h3>
