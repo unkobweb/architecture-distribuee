@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BusinessController;
+use Whoops\Run;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,6 @@ use App\Http\Controllers\BusinessController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [BusinessController::class, 'index']);
 Route::get('/search', [BusinessController::class, 'search'])->name('search');
-Route::get('/show/{id}', [BusinessController::class, 'show'])->name('business.show');
+Route::get('/show/{id}', [BusinessController::class, 'show'])->name('show');
