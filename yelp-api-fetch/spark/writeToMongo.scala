@@ -20,7 +20,7 @@ yelpBusiness.createOrReplaceTempView("yelpBusiness")
 yelpUsers.createOrReplaceTempView("yelpUsers")
 yelpReview.createOrReplaceTempView("yelpReview")
 
-val business = spark.sql("SELECT business_id, name, address, city, latitude, longitude, stars as rating, categories, hours, attributes.BusinessAcceptsCreditCards, attributes.RestaurantsReservations, attributes.WheelchairAccessible, attributes.OutdoorSeating, attributes.HappyHour, attributes.DogsAllowed FROM yelpBusiness WHERE is_open = 1")
+val business = spark.sql("SELECT business_id, name, address, city, latitude, longitude, stars as rating, review_count categories, hours, attributes.BusinessAcceptsCreditCards, attributes.RestaurantsReservations, attributes.WheelchairAccessible, attributes.OutdoorSeating, attributes.HappyHour, attributes.DogsAllowed FROM yelpBusiness WHERE is_open = 1")
 val user = spark.sql("SELECT user_id, name, yelping_since FROM yelpUsers")
 val review  = spark.sql("SELECT review_id, user_id, business_id, stars, text, date FROM yelpReview")
 
