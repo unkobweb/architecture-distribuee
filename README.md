@@ -29,6 +29,15 @@ Une fois toute les étapes réalisées, vous pouvez accéder à l'interface web 
 
 Maintenant que le projet est en place, nous allons pouvoir l'abreuver de données.
 
+### Configuration Spark
+
+Dans un premier temps, allez dans votre dossier d'installation Spark puis dans le dossier conf.
+Vous y trouverez le fichier le fichier "spark-defaults.conf.template", renommez-le en "spark-defaults.conf" puis ajoutez-y ces deux lignes à la fin :
+
+	spark.mongodb.input.uri 	mongodb://127.0.0.1/yelp
+	spark.mongodb.output.uri 	mongodb://127.0.0.1/yelp
+
+
 ### Batch
 
 Rendez vous dans le dossier yelp-api-fetch/spark et lancez la commande `spark-shell -I .\writeToMongo.scala  --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 --conf spark.sql.catalogImplementation=in-memory` pour charger en batch les données dans MongoDB.
