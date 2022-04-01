@@ -48,7 +48,7 @@
                 <a href="/show/{{$place->business_id}}">
                     <div class="business" style="background-image: url('{{$place->image_url ? $place->image_url : 'https://picsum.photos/1500/400'}}')">
                         <p class="location">{{$place->address}} - {{$place->city}}</p>
-                        <div class="description"><p><strong>{{$place->name}}</strong></p><p>{{$place->rating}}/5</p></div>
+                        <div class="description"><p><strong>{{$place->name}}</strong></p><p>{{$place->review_count}} notes - {{$place->rating}}/5</p></div>
                     </div>
                 </a>
                 @endforeach
