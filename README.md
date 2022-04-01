@@ -13,7 +13,7 @@ Certains logiciels sont nécessaires pour l'exécution de ce programme. Voici le
 ## Mise en place
 
 En premier lieu, cloner le projet sur votre machine.
-Il vous faudrat ensuite télécharger le dataset trouvable sur [Kaggle](https://www.kaggle.com/datasets/yelp-dataset/yelp-dataset?select=yelp_academic_dataset_business.json). 
+Il vous faudra ensuite télécharger le dataset trouvable sur [Kaggle](https://www.kaggle.com/datasets/yelp-dataset/yelp-dataset?select=yelp_academic_dataset_business.json). 
 *Ne sont nécessaire que les fichiers suivants : yelp_academic_dataset_business.json, yelp_academic_dataset_review.json et yelp_academic_dataset_user.json*
 Une archive zip contenant uniquement ces fichiers est disponible sur [ici](https://mega.nz/folder/sh9wTagD#dXiAKjdacnbFmOOSB12dFw)
 
@@ -27,7 +27,7 @@ Une fois toute les étapes réalisées, vous pouvez accéder à l'interface web 
 
 ## Ajout des données
 
-Maintenant que le projet est en place, nous allons pouvoir l'abreuver de données
+Maintenant que le projet est en place, nous allons pouvoir l'abreuver de données.
 
 ### Batch
 
@@ -40,8 +40,8 @@ Il est possible de déployer des "agents" qui auront pour mission de remplir la 
 
 Un exemple est fournit pour la ville Nantes, mais il est possible d'en ajouter autant que vous le désirez, vous devrez juste lui attribuer un autre PID et changer les ports d'écoutes pour qu'il correspondent au PID.
 
-Les agents logs en permanence leur activité, vous pouvez monter un volume sur votre machine hôte pour récupérer les fichiers de logs. Un health check est également appelable sur `GET http://localhost:[PID]` pour vérifier que l'agent vous répond.
+Les agents journalisent en permanence leur activité, vous pouvez monter un volume sur votre machine hôte pour récupérer les fichiers de logs. Un health check est également appelable sur `GET http://localhost:[PID]` pour vérifier que l'agent vous répond.
 
 Une fois que vous avez modifié votre `docker-compose.yml` vous pouvez relancer la commande `docker-compose up -d` pour démarrer les agents.
 
-Pour que les infos récupérées par les agents soit traitées et envoyées à la base de donnée, il faut lancer la commande `spark-shell -I .\streamingToMongo.scala --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 --conf spark.sql.catalogImplementation=in-memory` depuis le répertoire yelp-api-fetch/spark.
+Pour que les infos récupérées par les agents soient traitées et envoyées à la base de données, il faut lancer la commande `spark-shell -I .\streamingToMongo.scala --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 --conf spark.sql.catalogImplementation=in-memory` depuis le répertoire yelp-api-fetch/spark.
